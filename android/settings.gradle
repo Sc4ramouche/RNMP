@@ -1,0 +1,3 @@
+rootProject.name = 'setup_project'
+
+include ':app'
