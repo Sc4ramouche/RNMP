@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -38,6 +37,18 @@
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
+		81607B832AE145D89D536E0C /* oswald-light.svg in Resources */ = {isa = PBXBuildFile; fileRef = 33BFACCFCE4B46DDB5BCA1C8 /* oswald-light.svg */; };
+		96AB1B09702844B58B507DCD /* oswald-regular.svg in Resources */ = {isa = PBXBuildFile; fileRef = 8E51277E542C43D0B46B94AE /* oswald-regular.svg */; };
+		A746E6D6E1704E59B383CF5D /* oswaldBold.svg in Resources */ = {isa = PBXBuildFile; fileRef = 12ABFBC706A74732B5B9222A /* oswaldBold.svg */; };
+		10CCB5B59D64419EA629C998 /* oswald-bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BF260DE27429448E8B2B01FB /* oswald-bold.otf */; };
+		50FF320FD67B4123B5DEAF7B /* oswald-bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1333D611CB33473CA7E62171 /* oswald-bold.ttf */; };
+		8CE01B3136A64073B7AD8CB8 /* oswald-bold.woff in Resources */ = {isa = PBXBuildFile; fileRef = 9EC50AB21146444BBE96A039 /* oswald-bold.woff */; };
+		4BE66E7823F945EDB959A584 /* oswald-light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 848282837F7D426898F2E0FF /* oswald-light.otf */; };
+		5878CBCFC5464E18B6621200 /* oswald-light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08EAECF5A017450DAFB07642 /* oswald-light.ttf */; };
+		757FC4971D49440EA9F22ED1 /* oswald-light.woff in Resources */ = {isa = PBXBuildFile; fileRef = 55E9F27425F44ED682720E6C /* oswald-light.woff */; };
+		713AA7D32B474B67AB143F84 /* oswald-regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 47DBB6213E8048608F001337 /* oswald-regular.otf */; };
+		147ECA8899F441F1934768D8 /* oswald-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CFBCBE99A1414E908D69CC71 /* oswald-regular.ttf */; };
+		706625D5A05B48E8A15294F9 /* oswald-regular.woff in Resources */ = {isa = PBXBuildFile; fileRef = 2127BE98404D4511B4419D87 /* oswald-regular.woff */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -343,6 +354,18 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
+		33BFACCFCE4B46DDB5BCA1C8 /* oswald-light.svg */ = {isa = PBXFileReference; name = "oswald-light.svg"; path = "../assets/fonts/oswald-light.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8E51277E542C43D0B46B94AE /* oswald-regular.svg */ = {isa = PBXFileReference; name = "oswald-regular.svg"; path = "../assets/fonts/oswald-regular.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		12ABFBC706A74732B5B9222A /* oswaldBold.svg */ = {isa = PBXFileReference; name = "oswaldBold.svg"; path = "../assets/fonts/oswaldBold.svg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BF260DE27429448E8B2B01FB /* oswald-bold.otf */ = {isa = PBXFileReference; name = "oswald-bold.otf"; path = "../assets/fonts/oswald-bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1333D611CB33473CA7E62171 /* oswald-bold.ttf */ = {isa = PBXFileReference; name = "oswald-bold.ttf"; path = "../assets/fonts/oswald-bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9EC50AB21146444BBE96A039 /* oswald-bold.woff */ = {isa = PBXFileReference; name = "oswald-bold.woff"; path = "../assets/fonts/oswald-bold.woff"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		848282837F7D426898F2E0FF /* oswald-light.otf */ = {isa = PBXFileReference; name = "oswald-light.otf"; path = "../assets/fonts/oswald-light.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		08EAECF5A017450DAFB07642 /* oswald-light.ttf */ = {isa = PBXFileReference; name = "oswald-light.ttf"; path = "../assets/fonts/oswald-light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		55E9F27425F44ED682720E6C /* oswald-light.woff */ = {isa = PBXFileReference; name = "oswald-light.woff"; path = "../assets/fonts/oswald-light.woff"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		47DBB6213E8048608F001337 /* oswald-regular.otf */ = {isa = PBXFileReference; name = "oswald-regular.otf"; path = "../assets/fonts/oswald-regular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		CFBCBE99A1414E908D69CC71 /* oswald-regular.ttf */ = {isa = PBXFileReference; name = "oswald-regular.ttf"; path = "../assets/fonts/oswald-regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2127BE98404D4511B4419D87 /* oswald-regular.woff */ = {isa = PBXFileReference; name = "oswald-regular.woff"; path = "../assets/fonts/oswald-regular.woff"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -577,6 +600,7 @@
 				00E356EF1AD99517003FC87E /* setup_projectTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
+				55993B759E574AA4B72386F4 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -602,6 +626,26 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		55993B759E574AA4B72386F4 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				33BFACCFCE4B46DDB5BCA1C8 /* oswald-light.svg */,
+				8E51277E542C43D0B46B94AE /* oswald-regular.svg */,
+				12ABFBC706A74732B5B9222A /* oswaldBold.svg */,
+				BF260DE27429448E8B2B01FB /* oswald-bold.otf */,
+				1333D611CB33473CA7E62171 /* oswald-bold.ttf */,
+				9EC50AB21146444BBE96A039 /* oswald-bold.woff */,
+				848282837F7D426898F2E0FF /* oswald-light.otf */,
+				08EAECF5A017450DAFB07642 /* oswald-light.ttf */,
+				55E9F27425F44ED682720E6C /* oswald-light.woff */,
+				47DBB6213E8048608F001337 /* oswald-regular.otf */,
+				CFBCBE99A1414E908D69CC71 /* oswald-regular.ttf */,
+				2127BE98404D4511B4419D87 /* oswald-regular.woff */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -684,7 +728,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 940;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -1049,6 +1093,18 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				81607B832AE145D89D536E0C /* oswald-light.svg in Resources */,
+				96AB1B09702844B58B507DCD /* oswald-regular.svg in Resources */,
+				A746E6D6E1704E59B383CF5D /* oswaldBold.svg in Resources */,
+				10CCB5B59D64419EA629C998 /* oswald-bold.otf in Resources */,
+				50FF320FD67B4123B5DEAF7B /* oswald-bold.ttf in Resources */,
+				8CE01B3136A64073B7AD8CB8 /* oswald-bold.woff in Resources */,
+				4BE66E7823F945EDB959A584 /* oswald-light.otf in Resources */,
+				5878CBCFC5464E18B6621200 /* oswald-light.ttf in Resources */,
+				757FC4971D49440EA9F22ED1 /* oswald-light.woff in Resources */,
+				713AA7D32B474B67AB143F84 /* oswald-regular.otf in Resources */,
+				147ECA8899F441F1934768D8 /* oswald-regular.ttf in Resources */,
+				706625D5A05B48E8A15294F9 /* oswald-regular.woff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
