@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, View, Image } from 'react-native';
+
 import { Button } from '../components/button';
 
 type State = {
