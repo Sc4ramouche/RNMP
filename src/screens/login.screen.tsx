@@ -8,7 +8,9 @@ type State = {
   password: string
 }
 
-type Props = {};
+type Props = {
+  onLogin: () => void
+};
 export default class Login extends Component<Props, State> {
   state: State = {
     email: '',
@@ -21,10 +23,6 @@ export default class Login extends Component<Props, State> {
 
   handlePasswordChange = (password: string): void => {
     this.setState({ password });
-  }
-
-  handleLoginTap = (): void => {
-
   }
 
   render() {
@@ -42,7 +40,7 @@ export default class Login extends Component<Props, State> {
           style={[styles.input, {marginBottom: 32}]} />
         <Button 
         title="LOGIN"
-        onPress={this.handleLoginTap} />
+        onPress={this.props.onLogin} />
       </View>
     );
   }

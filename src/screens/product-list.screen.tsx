@@ -7,7 +7,9 @@ const arrowIcon = require('../images/arrow.png');
 type State = {
     data: Array<object>
 };
-type Props = {};
+type Props = {
+    onProductPress: (product: any) => void
+};
 export default class ProductList extends Component<Props, State> {
     state: State = {
         data: []
@@ -32,10 +34,10 @@ export default class ProductList extends Component<Props, State> {
     // TODO: find a way to explicitly specify type of product
     renderProduct = ({ item }) => {
         this.state.data.push(item);
-        const iconPath = '../images/' + item.title + '.png';
-        const skype = require('../images/Skype.png');
         return (
-            <TouchableOpacity style={styles.listItemContainer}>
+            <TouchableOpacity
+                style={styles.listItemContainer}
+                onPress={() => this.props.onProductPress(item)}>
                 <View style={styles.productContainer}>
                     <Image source={item.icon}
                         style={styles.listItemIcon} />
