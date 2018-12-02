@@ -62,9 +62,11 @@ const styles = StyleSheet.create({
     fontFamily: 'oswald-regular',
     textAlign: 'center',
     width: '80%',
+    color: '#696969',
     paddingVertical: 5,
     marginBottom: 24,
-    borderWidth: 1
+    borderWidth: 1,
+    borderColor: '#696969'
   },
   logo: {
     aspectRatio: 1.2,

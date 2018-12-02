@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     },
     descriptionText: {
         fontFamily: 'oswald-regular',
+        color: '#696969',
         fontSize: 16,
         marginBottom: 32
     },
