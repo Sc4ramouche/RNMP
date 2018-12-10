@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     headingText: {
-        fontFamily: 'oswald-regular',
+        fontFamily: 'Oswald-Regular',
         fontSize: 24
     },
     list: {
@@ -89,9 +89,9 @@ const styles = StyleSheet.create({
         resizeMode: 'contain'
     },
     listItemText: {
-        fontFamily: 'oswald-regular',
+        fontFamily: 'Oswald-Regular',
         fontSize: 16,
-        width: 64,
+        width: 128,
         paddingLeft: 16,
     },
     arrowContainer: {

@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     buttonText: {
         paddingVertical: 10,
         paddingHorizontal: 20,
-        fontFamily: 'oswald-bold',
+        fontFamily: 'Oswald-DemiBold',
         fontSize: 18,
         color: 'white'
     }

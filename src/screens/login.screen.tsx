@@ -54,12 +54,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   heading: {
-    fontFamily: 'oswald-regular',
+    fontFamily: 'Oswald-Regular',
     fontSize: 24,
     marginBottom: 80
   },
   input: {
-    fontFamily: 'oswald-regular',
+    fontFamily: 'Oswald-Regular',
     textAlign: 'center',
     width: '80%',
     color: '#696969',

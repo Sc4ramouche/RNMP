@@ -55,15 +55,9 @@
 	</dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>oswald-bold.otf</string>
-		<string>oswald-bold.ttf</string>
-		<string>oswald-bold.woff</string>
-		<string>oswald-light.otf</string>
-		<string>oswald-light.ttf</string>
-		<string>oswald-light.woff</string>
-		<string>oswald-regular.otf</string>
-		<string>oswald-regular.ttf</string>
-		<string>oswald-regular.woff</string>
+		<string>Oswald-Light.ttf</string>
+		<string>Oswald-Regular.ttf</string>
+		<string>Oswald-DemiBold.ttf</string>
 	</array>
 </dict>
 </plist>

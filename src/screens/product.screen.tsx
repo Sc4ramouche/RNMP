@@ -12,7 +12,7 @@ export default class Product extends Component<Props, State> {
     render() {
         const { product } = this.props;
         return (
-            <View>
+            <View style={styles.container}>
                 <View style={styles.headingContainer}>
                     <Image source={product.icon} style={styles.icon} />
                     <Text style={styles.headingText}>{product.title}</Text>
@@ -30,6 +30,10 @@ export default class Product extends Component<Props, State> {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#FFFFFF',
+        flex: 1
+    },
     headingContainer: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -42,7 +46,7 @@ const styles = StyleSheet.create({
         resizeMode: 'contain'
     },
     headingText: {
-        fontFamily: 'oswald-regular',
+        fontFamily: 'Oswald-Regular',
         fontSize: 40,
         paddingLeft: 32
     },
@@ -52,7 +56,7 @@ const styles = StyleSheet.create({
         paddingRight: 80
     },
     descriptionText: {
-        fontFamily: 'oswald-regular',
+        fontFamily: 'Oswald-Regular',
         color: '#696969',
         fontSize: 16,
         marginBottom: 32
