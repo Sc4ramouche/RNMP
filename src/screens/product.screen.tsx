@@ -4,10 +4,12 @@ import { Text, View, Image, StyleSheet } from 'react-native';
 import { Button } from '../components/button';
 
 type State = {};
+
 type Props = {
-    product: object,
-    toProducts: () => void
+    product: ProductItem;
+    toProducts: () => void;
 };
+
 export default class Product extends Component<Props, State> {
     render() {
         const { product } = this.props;
@@ -18,11 +20,14 @@ export default class Product extends Component<Props, State> {
                     <Text style={styles.headingText}>{product.title}</Text>
                 </View>
                 <View style={styles.descriptionContainer}>
-                    <Text style={styles.descriptionText}>{'\t' + product.description}</Text>
-                    <Button 
+                    <Text style={styles.descriptionText}>
+                        {'\t' + product.description}
+                    </Text>
+                    <Button
                         title="All Products"
                         onPress={this.props.toProducts}
-                        style={styles.descriptionButton} />
+                        style={styles.descriptionButton}
+                    />
                 </View>
             </View>
         );
@@ -32,36 +37,36 @@ export default class Product extends Component<Props, State> {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#FFFFFF',
-        flex: 1
+        flex: 1,
     },
     headingContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         paddingTop: 32,
-        paddingLeft: 32
+        paddingLeft: 32,
     },
     icon: {
         width: 72,
         height: 72,
-        resizeMode: 'contain'
+        resizeMode: 'contain',
     },
     headingText: {
         fontFamily: 'Oswald-Regular',
         fontSize: 40,
-        paddingLeft: 32
+        paddingLeft: 32,
     },
     descriptionContainer: {
         paddingTop: 40,
         paddingLeft: 64,
-        paddingRight: 80
+        paddingRight: 80,
     },
     descriptionText: {
         fontFamily: 'Oswald-Regular',
         color: '#696969',
         fontSize: 16,
-        marginBottom: 32
+        marginBottom: 32,
     },
     descriptionButton: {
-        alignSelf: 'flex-start'
-    }
+        alignSelf: 'flex-start',
+    },
 });

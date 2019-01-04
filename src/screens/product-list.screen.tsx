@@ -1,46 +1,48 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+    View,
+    Text,
+    FlatList,
+    Image,
+    StyleSheet,
+    TouchableOpacity,
+} from 'react-native';
 
 import { products } from '../shared/products';
 const arrowIcon = require('../images/arrow.png');
 
-type State = {
-    data: Array<object>
-};
+type State = {};
+
 type Props = {
-    onProductPress: (product: any) => void
+    onProductPress: (product: ProductItem) => void;
 };
+
 export default class ProductList extends Component<Props, State> {
-    state: State = {
-        data: []
-    }
     render() {
         return (
             <View style={styles.container}>
                 <View style={styles.heading}>
-                    <Text style={styles.headingText}>Approwed Freeware</Text>
+                    <Text style={styles.headingText}>Approved Freeware</Text>
                 </View>
                 <View style={styles.list}>
                     <FlatList
                         data={products}
                         renderItem={this.renderProduct}
-                        keyExtractor={(item) => item.title} />
+                        keyExtractor={item => item.title}
+                    />
                 </View>
             </View>
-
         );
     }
 
-    // TODO: find a way to explicitly specify type of product
-    renderProduct = ({ item }) => {
-        this.state.data.push(item);
+    renderProduct = ({ item }: { item: ProductItem }) => {
         return (
             <TouchableOpacity
                 style={styles.listItemContainer}
-                onPress={() => this.props.onProductPress(item)}>
+                onPress={() => this.props.onProductPress(item)}
+            >
                 <View style={styles.productContainer}>
-                    <Image source={item.icon}
-                        style={styles.listItemIcon} />
+                    <Image source={item.icon} style={styles.listItemIcon} />
                     <Text style={styles.listItemText}>{item.title}</Text>
                 </View>
                 <View style={styles.arrowContainer}>
@@ -48,7 +50,7 @@ export default class ProductList extends Component<Props, State> {
                 </View>
             </TouchableOpacity>
         );
-    }
+    };
 }
 
 const styles = StyleSheet.create({
@@ -56,20 +58,20 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#FFFFFF'
+        backgroundColor: '#FFFFFF',
     },
     heading: {
         flex: 0.15,
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     headingText: {
         fontFamily: 'Oswald-Regular',
-        fontSize: 24
+        fontSize: 24,
     },
     list: {
         flex: 0.85,
         width: '100%',
-        borderTopWidth: 1
+        borderTopWidth: 1,
     },
     listItemContainer: {
         flexDirection: 'row',
@@ -81,12 +83,12 @@ const styles = StyleSheet.create({
     productContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        width: '40%'
+        width: '40%',
     },
     listItemIcon: {
         width: 56,
         height: 56,
-        resizeMode: 'contain'
+        resizeMode: 'contain',
     },
     listItemText: {
         fontFamily: 'Oswald-Regular',
@@ -98,11 +100,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-end',
         width: '60%',
-        paddingRight: 16
+        paddingRight: 16,
     },
     listItemArrow: {
         width: 36,
         height: 36,
-        resizeMode: 'contain'
-    }
+        resizeMode: 'contain',
+    },
 });

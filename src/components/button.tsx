@@ -3,16 +3,21 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 type State = {};
 type Props = {
-    title: string,
-    onPress: () => void,
-    style?: object
+    title: string;
+    onPress: () => void;
+    style?: object;
 };
 export class Button extends Component<Props, State> {
     render() {
         return (
-            <TouchableOpacity 
+            <TouchableOpacity
                 onPress={this.props.onPress}
-                style={this.props.style ? [styles.container, this.props.style] : styles.container}>
+                style={
+                    this.props.style
+                        ? [styles.container, this.props.style]
+                        : styles.container
+                }
+            >
                 <View style={styles.button}>
                     <Text style={styles.buttonText}>{this.props.title}</Text>
                 </View>
@@ -28,13 +33,13 @@ const styles = StyleSheet.create({
     button: {
         alignItems: 'center',
         backgroundColor: '#CEDB56',
-        marginBottom: 20
+        marginBottom: 20,
     },
     buttonText: {
         paddingVertical: 10,
         paddingHorizontal: 20,
         fontFamily: 'Oswald-DemiBold',
         fontSize: 18,
-        color: 'white'
-    }
+        color: 'white',
+    },
 });
