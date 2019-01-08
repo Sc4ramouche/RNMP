@@ -3,11 +3,13 @@ import { createSwitchNavigator, createStackNavigator, createAppContainer } from 
 import Login from './screens/login.screen';
 import ProductList from './screens/product-list.screen';
 import Product from './screens/product.screen';
+import Map from './screens/map.screen';
 
 const ProductsNavigator = createStackNavigator(
 	{
 		ProductList,
 		Product,
+		Map,
 	},
 	{
 		initialRouteName: 'ProductList',

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, StyleSheet } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 
 import { Button, commonStyles } from '../shared';
@@ -30,6 +30,9 @@ export default class Product extends Component<Props> {
 		return (
 			<View style={styles.container}>
 				<View style={styles.headingContainer}>
+					<TouchableOpacity onPress={() => navigation.navigate('Map')}>
+						<Image source={require('../images/map.png')} style={styles.icon} />
+					</TouchableOpacity>
 					<Text style={[commonStyles.oswaldRegular, styles.headingText]}>{product.name}</Text>
 				</View>
 				<View style={styles.descriptionContainer}>
@@ -58,6 +61,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		paddingTop: 32,
 		paddingLeft: 32,
+		paddingRight: 16,
 	},
 	icon: {
 		width: 72,
@@ -65,6 +69,7 @@ const styles = StyleSheet.create({
 		resizeMode: 'contain',
 	},
 	headingText: {
+		flex: 1,
 		fontSize: 40,
 		paddingLeft: 32,
 	},

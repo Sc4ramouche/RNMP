@@ -16,8 +16,8 @@ type Props = {
 
 export default class Login extends Component<Props, State> {
 	state: State = {
-		email: 'vladislav_kovechenkov@epam.com',
-		password: 'LUMAQweasdzxcasdfgh5',
+		email: '',
+		password: '',
 		error: false,
 	};
 
