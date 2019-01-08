@@ -10,8 +10,8 @@ const NUMBER_OF_PRODUCTS: number = 20;
 type State = {
 	items: Array<ProductItem>;
 	offset: number;
+	totalItems: number;
 	refreshing: boolean;
-	onEndReachedDuringMomentum: boolean;
 };
 
 type Props = {
@@ -31,40 +31,85 @@ export default class ProductList extends Component<Props, State> {
 
 	state: State = {
 		offset: 1,
+		totalItems: 1,
 		items: [],
 		refreshing: false,
-		onEndReachedDuringMomentum: false,
 	};
 
-	fetchProducts = (offset?: number): Promise<any> => {
-		this.setState({ refreshing: true });
-		return fetch(
-			`http://ecsc00a02fb3.epam.com/rest/V1/products?searchCriteria[currentPage]=${
-				offset ? offset : 1
-			}&searchCriteria[pageSize]=15`
-		)
-			.then(resp => resp.json())
-			.then(data => {
-				this.setState({ refreshing: false });
-				return data;
-			})
-			.catch(err => console.log(err));
-	};
+	// fetchProducts = (offset?: number): Promise<any> => {
+	// 	this.setState({ refreshing: true });
+	// 	return fetch(
+	// 		`http://ecsc00a02fb3.epam.com/rest/V1/products?searchCriteria[currentPage]=${
+	// 			offset ? offset : 1
+	// 		}&searchCriteria[pageSize]=15`
+	// 	)
+	// 		.then(resp => resp.json())
+	// 		.then(data => {
+	// 			this.setState({ refreshing: false });
+	// 			return data;
+	// 		})
+	// 		.catch(err => console.log(err));
+	// };
 
-	update = (info: { distanceFromEnd: number }): void => {
-		if (!this.state.refreshing && !this.state.onEndReachedDuringMomentum) {
-			this.fetchProducts(this.state.offset + 1).then(data =>
-				this.setState({
-					items: [...this.state.items, ...data.items],
-					offset: this.state.offset++,
-					onEndReachedDuringMomentum: true,
-				})
-			);
+	// update = (info: { distanceFromEnd: number }): void => {
+	// 	if (!this.state.refreshing) {
+	// 		this.fetchProducts(this.state.offset + 1).then(data =>
+	// 			this.setState({
+	// 				items: [...this.state.items, ...data.items],
+	// 				offset: this.state.offset++,
+	// 			})
+	// 		);
+	// 	}
+	// };
+
+	// getItems = (): void => {
+	// 	if (this.state.items.length < this.state.totalItems) {
+	// 		this.setState({ refreshing: true });
+	// 		fetch(
+	// 			`http://ecsc00a02fb3.epam.com/rest/V1/products?searchCriteria[pageSize]=${NUMBER_OF_PRODUCTS}&searchCriteria[currentPage]=${
+	// 				this.state.offset
+	// 			}`
+	// 		)
+	// 			.then(res => res.json())
+	// 			.then(data => {
+	// 				this.setState(prevState => ({
+	// 					items: [...prevState.items, ...data.items],
+	// 					totalItems: data.total_count,
+	// 					offset: this.state.offset + 1,
+	// 				}));
+	// 			})
+	// 			.then(() => this.setState({ refreshing: false }));
+	// 	}
+	// };
+
+	getItems = async (): Promise<any> => {
+		if (this.state.items.length < this.state.totalItems) {
+			this.setState({ refreshing: true });
+			const data = await fetch(
+				`http://ecsc00a02fb3.epam.com/rest/V1/products?searchCriteria[pageSize]=${NUMBER_OF_PRODUCTS}&searchCriteria[currentPage]=${
+					this.state.offset
+				}`
+			).then(res => res.json());
+			this.setState({
+				items: [...this.state.items, ...data.items],
+				totalItems: data.total_count,
+				offset: this.state.offset + 1,
+			});
+			this.setState({ refreshing: false });
 		}
 	};
 
+	refresh = (): void => {
+		this.setState({
+			items: [],
+			offset: 1,
+			totalItems: 1,
+		});
+		this.getItems();
+	};
+
 	componentDidMount = (): void => {
-		this.fetchProducts().then(data => this.setState({ items: data.items }));
+		this.getItems();
 	};
 
 	render() {
@@ -74,12 +119,9 @@ export default class ProductList extends Component<Props, State> {
 					data={this.state.items}
 					renderItem={this.renderProduct}
 					keyExtractor={item => item.id + ''}
-					onRefresh={this.fetchProducts}
+					onRefresh={this.refresh}
 					refreshing={this.state.refreshing}
-					onEndReached={() => this.update({ distanceFromEnd: 0.01 })}
-					onMomentumScrollBegin={() => {
-						this.state.onEndReachedDuringMomentum = false;
-					}}
+					onEndReached={this.getItems}
 					style={styles.list}
 				/>
 			</View>
