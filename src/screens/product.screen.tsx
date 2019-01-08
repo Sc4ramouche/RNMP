@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, Image, StyleSheet } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 
-import { Button } from '../components/button';
-import { commonStyles } from '../shared/const/styles';
+import { Button, commonStyles } from '../shared';
 
 type NavigationParams = {
 	product: ProductItem;
@@ -31,12 +30,12 @@ export default class Product extends Component<Props> {
 		return (
 			<View style={styles.container}>
 				<View style={styles.headingContainer}>
-					<Image source={product.icon} style={styles.icon} />
-					<Text style={[commonStyles.oswaldRegular, styles.headingText]}>{product.title}</Text>
+					<Text style={[commonStyles.oswaldRegular, styles.headingText]}>{product.name}</Text>
 				</View>
 				<View style={styles.descriptionContainer}>
 					<Text style={[commonStyles.oswaldRegular, styles.descriptionText]}>
-						{'\t' + product.description}
+						{'\t' +
+							'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}
 					</Text>
 					<Button
 						title="All Products"

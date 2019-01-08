@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, View, Image } from 'react-native';
 
-import { Button } from '../components/button';
-import { commonStyles } from '../shared/const/styles';
+import { Button, ErrorModal, commonStyles } from '../shared';
 
 type State = {
 	email: string;
@@ -17,8 +16,8 @@ type Props = {
 
 export default class Login extends Component<Props, State> {
 	state: State = {
-		email: '',
-		password: '',
+		email: 'vladislav_kovechenkov@epam.com',
+		password: 'LUMAQweasdzxcasdfgh5',
 		error: false,
 	};
 
@@ -31,6 +30,7 @@ export default class Login extends Component<Props, State> {
 	};
 
 	handleLoginClick = (): void => {
+		this.setState({ error: false });
 		const body = {
 			username: this.state.email,
 			password: this.state.password,
@@ -53,8 +53,11 @@ export default class Login extends Component<Props, State> {
 			})
 			.catch(err => {
 				this.setState({ error: true });
-				this.props.navigation.navigate('ProductList');
 			});
+	};
+
+	closeModal = (): void => {
+		this.setState({ error: false });
 	};
 
 	render() {
@@ -62,21 +65,25 @@ export default class Login extends Component<Props, State> {
 			<View style={styles.container}>
 				<Image source={require('../images/logo.png')} style={styles.logo} />
 				<Text style={[commonStyles.oswaldRegular, styles.heading]}>Product Store</Text>
-				<Text style={[commonStyles.oswaldRegular, styles.error]}>
-					{this.state.error ? 'Invalid username or password' : ''}
-				</Text>
 				<TextInput
+					value={this.state.email}
 					onChangeText={this.handleLoginChange}
 					placeholder="email"
 					style={[commonStyles.oswaldRegular, styles.input]}
 				/>
 				<TextInput
+					value={this.state.password}
 					onChangeText={this.handlePasswordChange}
 					secureTextEntry={true}
 					placeholder="password"
 					style={[styles.input, { marginBottom: 32 }]}
 				/>
 				<Button title="LOGIN" onPress={this.handleLoginClick} />
+				<ErrorModal
+					visible={this.state.error}
+					action={this.handleLoginClick}
+					close={this.closeModal}
+				/>
 			</View>
 		);
 	}
@@ -106,10 +113,5 @@ const styles = StyleSheet.create({
 		aspectRatio: 1.2,
 		resizeMode: 'contain',
 		marginBottom: 16,
-	},
-	error: {
-		color: '#CB2323',
-		marginBottom: 16,
-		fontSize: 16,
 	},
 });
