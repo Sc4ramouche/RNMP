@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Linking } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
-import { NavigationScreenProp } from 'react-navigation';
+import { View, StyleSheet, Dimensions, Animated } from 'react-native';
+import MapView, { Marker, AnimatedRegion } from 'react-native-maps';
+
+const screen = Dimensions.get('window');
+const ASPECT_RATIO = screen.width / screen.height;
+const LATITUDE_DELTA = 0.0422;
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 type NavigationParams = {
 	product: ProductItem;
@@ -11,16 +15,32 @@ type Props = {
 	navigation: NavigationScreenProp<{}, NavigationParams>;
 };
 
-export default class Map extends Component<Props> {
-	call = (): void => {
-		const url = 'hero';
-		Linking.canOpenURL(url).then(canOpen => {
-			if (!canOpen) {
-				console.log('Could not open url');
-			} else {
-				Linking.openURL(url).catch(err => Promise.reject(err));
-			}
-		});
+type State = {
+	coordinate: {
+		latitude: Animated.Value;
+		longitude: Animated.Value;
+	};
+};
+
+export default class Map extends Component<Props, State> {
+	state: State = {
+		coordinate: new AnimatedRegion({
+			latitude: 37.899,
+			longitude: 41.1308,
+			latitudeDelta: LATITUDE_DELTA,
+			longitudeDelta: LONGITUDE_DELTA,
+		}),
+	};
+
+	move = (): void => {
+		const transition = {
+			latitude: 37.888,
+			longitude: 41.1285,
+			latitudeDelta: LATITUDE_DELTA,
+			longitudeDelta: LONGITUDE_DELTA,
+		};
+		const { coordinate } = this.state;
+		coordinate.timing(transition).start();
 	};
 
 	render() {
@@ -36,11 +56,7 @@ export default class Map extends Component<Props> {
 					}}
 					showsUserLocation={true}
 				>
-					<Marker
-						coordinate={{ latitude: 37.89915, longitude: 41.13021 }}
-						title={this.props.navigation.getParam('product').name}
-						onPress={this.call}
-					/>
+					<Marker.Animated onPress={this.move} coordinate={this.state.coordinate} />
 				</MapView>
 			</View>
 		);
