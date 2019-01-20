@@ -30,7 +30,7 @@ export default class Product extends Component<Props> {
 		return (
 			<View style={styles.container}>
 				<View style={styles.headingContainer}>
-					<TouchableOpacity onPress={() => navigation.navigate('Map')}>
+					<TouchableOpacity onPress={() => navigation.navigate('Map', { product })}>
 						<Image source={require('../images/map.png')} style={styles.icon} />
 					</TouchableOpacity>
 					<Text style={[commonStyles.oswaldRegular, styles.headingText]}>{product.name}</Text>

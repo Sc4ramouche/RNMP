@@ -5,27 +5,19 @@ import { commonStyles } from '../../shared';
 
 type Props = {
 	visible: boolean;
-	action(): void;
+	message: string;
 	close(): void;
 };
 
 export const ErrorModal = (props: Props) => (
-	<Modal
-		visible={props.visible}
-		animationType="fade"
-		transparent={true}
-		onRequestClose={() => 's'}
-	>
+	<Modal visible={props.visible} animationType="fade" transparent={true} onRequestClose={() => 's'}>
 		<View style={styles.container}>
 			<View style={styles.content}>
-				<Text style={[styles.message, commonStyles.oswaldRegular]}>
-					Invalid username or password
-				</Text>
+				<Text style={[styles.message, commonStyles.oswaldRegular]}>{props.message}</Text>
 				<View style={styles.buttons}>
-					<Text style={[styles.btn, commonStyles.oswaldBold]} onPress={props.action}>
-						Try again
+					<Text style={[styles.btn, commonStyles.oswaldBold]} onPress={props.close}>
+						Close
 					</Text>
-					<Text style={[styles.btn, commonStyles.oswaldBold]} onPress={props.close}>Close</Text>
 				</View>
 			</View>
 		</View>

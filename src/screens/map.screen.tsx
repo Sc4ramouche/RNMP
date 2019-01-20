@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Linking } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import { NavigationScreenProp } from 'react-navigation';
 
-type Props = {};
+type NavigationParams = {
+	product: ProductItem;
+};
+
+type Props = {
+	navigation: NavigationScreenProp<{}, NavigationParams>;
+};
 
 export default class Map extends Component<Props> {
 	call = (): void => {
@@ -31,7 +38,7 @@ export default class Map extends Component<Props> {
 				>
 					<Marker
 						coordinate={{ latitude: 37.89915, longitude: 41.13021 }}
-						title={'Batman is here'}
+						title={this.props.navigation.getParam('product').name}
 						onPress={this.call}
 					/>
 				</MapView>

@@ -1,24 +1,28 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, View, Image } from 'react-native';
 
-import { Button, ErrorModal, commonStyles } from '../shared';
+import { Button, commonStyles } from '../shared';
+import { connect } from 'react-redux';
+import { login } from '../actions';
 
 type State = {
 	email: string;
 	password: string;
-	error: boolean;
+	error: string;
 };
 
 type Props = {
 	navigation: any;
-	onLogin: () => void;
+	onLogin(): void;
+	login(email: string, password: string): void;
+	error: Error;
 };
 
-export default class Login extends Component<Props, State> {
+class Login extends Component<Props, State> {
 	state: State = {
 		email: '',
 		password: '',
-		error: false,
+		error: '',
 	};
 
 	handleLoginChange = (email: string): void => {
@@ -30,7 +34,9 @@ export default class Login extends Component<Props, State> {
 	};
 
 	handleLoginClick = (): void => {
-		this.setState({ error: false });
+		this.props.login(this.state.email, this.state.password);
+		console.log(this.props.error);
+		this.setState({ error: '' });
 		const body = {
 			username: this.state.email,
 			password: this.state.password,
@@ -48,16 +54,16 @@ export default class Login extends Component<Props, State> {
 				if (!data.message) {
 					this.props.navigation.navigate('ProductList');
 				} else {
-					this.setState({ error: true });
+					this.setState({ error: 'Invalid username or password' });
 				}
 			})
 			.catch(err => {
-				this.setState({ error: true });
+				this.setState({ error: err.message });
 			});
 	};
 
 	closeModal = (): void => {
-		this.setState({ error: false });
+		this.setState({ error: '' });
 	};
 
 	render() {
@@ -79,11 +85,6 @@ export default class Login extends Component<Props, State> {
 					style={[styles.input, { marginBottom: 32 }]}
 				/>
 				<Button title="LOGIN" onPress={this.handleLoginClick} />
-				<ErrorModal
-					visible={this.state.error}
-					action={this.handleLoginClick}
-					close={this.closeModal}
-				/>
 			</View>
 		);
 	}
@@ -115,3 +116,20 @@ const styles = StyleSheet.create({
 		marginBottom: 16,
 	},
 });
+
+function mapStateToProps(state: any) {
+	return {
+		error: state.error,
+	};
+}
+
+function mapDispatchToProps(dispatch: any) {
+	return {
+		login: (email: string, password: string) => dispatch(login(email, password)),
+	};
+}
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Login);
