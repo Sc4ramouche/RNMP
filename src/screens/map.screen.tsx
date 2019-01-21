@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Dimensions, Animated } from 'react-native';
 import MapView, { Marker, AnimatedRegion } from 'react-native-maps';
+import { NavigationScreenProp } from 'react-navigation';
 
 const screen = Dimensions.get('window');
 const ASPECT_RATIO = screen.width / screen.height;
