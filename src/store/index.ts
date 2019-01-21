@@ -10,10 +10,6 @@ import {
 
 const rootReducer = combineReducers({ products, login, isLoading, error });
 
-export const store = createStore(
-	rootReducer,
-	compose(
-		applyMiddleware(thunkMiddleware),
-		(window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()
-	)
-);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
