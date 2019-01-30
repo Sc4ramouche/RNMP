@@ -33,13 +33,13 @@ const styles = StyleSheet.create({
 	},
 	content: {
 		width: '70%',
-		height: '20%',
+		height: '18%',
 		backgroundColor: 'white',
+		justifyContent: 'space-between',
 		padding: 16,
 		borderRadius: 5,
 	},
 	message: {
-		marginBottom: 48,
 		textAlign: 'center',
 		fontSize: 18,
 	},

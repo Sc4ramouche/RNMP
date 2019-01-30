@@ -1,24 +1,49 @@
-import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React from 'react';
+import { Animated, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
 import { commonStyles } from '../../shared';
 
 type Props = {
 	title: string;
 	onPress: () => void;
-	style?: object;
+	success: number;
 };
 
-export const Button = (props: Props) => (
-	<TouchableOpacity
-		onPress={props.onPress}
-		style={props.style ? [styles.container, props.style] : styles.container}
-	>
-		<View style={styles.button}>
-			<Text style={[commonStyles.oswaldBold, styles.buttonText]}>{props.title}</Text>
-		</View>
-	</TouchableOpacity>
-);
+type State = {
+	color: Animated.Value;
+};
+
+export class Button extends React.Component<Props, State> {
+	state: State = {
+		color: new Animated.Value(0),
+	};
+
+	public componentDidUpdate(prevProps: Props, prevState: State) {
+		if (prevProps.success !== this.props.success) {
+			Animated.timing(this.state.color, { toValue: this.props.success, duration: 300 }).start();
+		}
+	}
+
+	render() {
+		const color = this.state.color.interpolate({
+			inputRange: [-1, 0, 1],
+			outputRange: ['rgb(178, 39, 70)', 'rgb(206, 219, 86)', 'rgb(206, 219, 86)'],
+		});
+		return (
+			<TouchableWithoutFeedback onPress={this.props.onPress} style={styles.container}>
+				<Animated.View
+					style={
+						this.props.success
+							? [styles.button, { backgroundColor: color }]
+							: styles.button
+					}
+				>
+					<Text style={[commonStyles.oswaldBold, styles.buttonText]}>{this.props.title}</Text>
+				</Animated.View>
+			</TouchableWithoutFeedback>
+		);
+	}
+}
 
 const styles = StyleSheet.create({
 	container: {

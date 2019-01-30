@@ -1,20 +1,38 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View, Image } from 'react-native';
+import {
+	StyleSheet,
+	Text,
+	TextInput,
+	View,
+	Image,
+	LayoutAnimation,
+	Platform,
+	UIManager,
+	Animated,
+} from 'react-native';
 
 import { Button, commonStyles } from '../shared';
 import { connect } from 'react-redux';
 import { login } from '../actions';
 
+if (Platform.OS === 'android') {
+	UIManager.setLayoutAnimationEnabledExperimental(true);
+}
+
 type State = {
 	email: string;
 	password: string;
-	error: string;
+	success: number;
 };
 
 type Props = {
 	navigation: any;
-	onLogin(): void;
-	login(email: string, password: string): void;
+	login(
+		email: string,
+		password: string,
+		successCallback: () => void,
+		animationCallback: (success: number) => void
+	): void;
 	error: Error;
 };
 
@@ -22,53 +40,56 @@ class Login extends Component<Props, State> {
 	state: State = {
 		email: '',
 		password: '',
-		error: '',
+		success: 0,
 	};
 
-	handleLoginChange = (email: string): void => {
+	public componentDidUpdate(prevProps: Props, prevState: State) {
+		if (prevProps.error && this.props.error === null) {
+			this.animate(0);
+		}
+	}
+
+	private handleLoginChange = (email: string): void => {
 		this.setState({ email });
 	};
 
-	handlePasswordChange = (password: string): void => {
+	private handlePasswordChange = (password: string): void => {
 		this.setState({ password });
 	};
 
-	handleLoginClick = (): void => {
-		this.props.login(this.state.email, this.state.password);
-		console.log(this.props.error);
-		this.setState({ error: '' });
-		const body = {
-			username: this.state.email,
-			password: this.state.password,
-		};
-
-		fetch('http://ecsc00a02fb3.epam.com/index.php/rest/V1/integration/customer/token', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(body),
-		})
-			.then(res => res.json())
-			.then(data => {
-				if (!data.message) {
-					this.props.navigation.navigate('ProductList');
-				} else {
-					this.setState({ error: 'Invalid username or password' });
-				}
-			})
-			.catch(err => {
-				this.setState({ error: err.message });
-			});
+	private animate = (success: number): void => {
+		success === -1
+			? LayoutAnimation.configureNext(LayoutAnimation.Presets.spring)
+			: LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+		this.setState({ success });
 	};
 
-	closeModal = (): void => {
-		this.setState({ error: '' });
+	handleLoginClick = (): void => {
+		this.props.login(
+			this.state.email,
+			this.state.password,
+			() => {
+				this.props.navigation.navigate('ProductList');
+			},
+			this.animate
+		);
+	};
+
+	calcMargin = (): { marginLeft?: number; marginRight?: number } => {
+		switch (this.state.success) {
+			case 1:
+				return { marginLeft: 64 };
+			case -1:
+				return { marginRight: 64 };
+			default:
+				return {};
+		}
 	};
 
 	render() {
+		
 		return (
-			<View style={styles.container}>
+			<Animated.View style={styles.container}>
 				<Image source={require('../images/logo.png')} style={styles.logo} />
 				<Text style={[commonStyles.oswaldRegular, styles.heading]}>Product Store</Text>
 				<TextInput
@@ -84,8 +105,18 @@ class Login extends Component<Props, State> {
 					placeholder="password"
 					style={[styles.input, { marginBottom: 32 }]}
 				/>
-				<Button title="LOGIN" onPress={this.handleLoginClick} />
-			</View>
+				<View style={styles.loginContainer}>
+					<Image source={require('../images/check.png')} style={styles.check} />
+					<Image source={require('../images/cross.png')} style={styles.cross} />
+					<View style={this.calcMargin()}>
+						<Button
+							title="LOGIN"
+							onPress={this.handleLoginClick}
+							success={this.state.success}
+						/>
+					</View>
+				</View>
+			</Animated.View>
 		);
 	}
 }
@@ -110,6 +141,20 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		borderColor: '#696969',
 	},
+	loginContainer: {
+		width: '50%',
+	},
+	check: {
+		width: 48,
+		height: 48,
+		position: 'absolute',
+	},
+	cross: {
+		width: 48,
+		height: 48,
+		position: 'absolute',
+		right: 0,
+	},
 	logo: {
 		aspectRatio: 1.2,
 		resizeMode: 'contain',
@@ -125,7 +170,12 @@ function mapStateToProps(state: any) {
 
 function mapDispatchToProps(dispatch: any) {
 	return {
-		login: (email: string, password: string) => dispatch(login(email, password)),
+		login: (
+			email: string,
+			password: string,
+			successCallback: () => void,
+			animationCallback: () => void
+		) => dispatch(login(email, password, successCallback, animationCallback)),
 	};
 }
 

@@ -1,4 +1,5 @@
 import { loginAT } from './loginActionTypes';
+import { LayoutAnimation } from 'react-native';
 
 const { LOGIN_SUCCESS, LOGIN_REQUEST, LOGIN_FAILURE } = loginAT;
 
@@ -24,7 +25,13 @@ function loginFailure(error: Error): Action {
 	};
 }
 
-export const login = (email: string, password: string) => (dispatch: any) => {
+export const login = (
+	email: string,
+	password: string,
+	successCallback: () => void,
+	animationCallback: (success: number) => void
+) => (dispatch: any) => {
+	const delay = 700;
 	dispatch(loginRequest());
 	fetch('http://ecsc00a02fb3.epam.com/index.php/rest/V1/integration/customer/token', {
 		method: 'POST',
@@ -40,8 +47,11 @@ export const login = (email: string, password: string) => (dispatch: any) => {
 		.then(data => {
 			if (!data.message) {
 				dispatch(loginSuccess());
+				animationCallback(1);
+				setTimeout(() => successCallback(), delay);
 			} else {
-				dispatch(loginFailure(new Error(data.message)));
+				animationCallback(-1);
+				setTimeout(() => dispatch(loginFailure(new Error(data.message))), delay);
 			}
 		})
 		.catch(err => {
