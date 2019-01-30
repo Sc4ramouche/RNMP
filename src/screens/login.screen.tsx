@@ -1,25 +1,28 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, View, Image } from 'react-native';
 
-import { Button } from '../components/button';
-import { commonStyles } from '../shared/const/styles';
+import { Button, commonStyles } from '../shared';
+import { connect } from 'react-redux';
+import { login } from '../actions';
 
 type State = {
 	email: string;
 	password: string;
-	error: boolean;
+	error: string;
 };
 
 type Props = {
 	navigation: any;
-	onLogin: () => void;
+	onLogin(): void;
+	login(email: string, password: string): void;
+	error: Error;
 };
 
-export default class Login extends Component<Props, State> {
+class Login extends Component<Props, State> {
 	state: State = {
 		email: '',
 		password: '',
-		error: false,
+		error: '',
 	};
 
 	handleLoginChange = (email: string): void => {
@@ -31,6 +34,9 @@ export default class Login extends Component<Props, State> {
 	};
 
 	handleLoginClick = (): void => {
+		this.props.login(this.state.email, this.state.password);
+		console.log(this.props.error);
+		this.setState({ error: '' });
 		const body = {
 			username: this.state.email,
 			password: this.state.password,
@@ -48,13 +54,16 @@ export default class Login extends Component<Props, State> {
 				if (!data.message) {
 					this.props.navigation.navigate('ProductList');
 				} else {
-					this.setState({ error: true });
+					this.setState({ error: 'Invalid username or password' });
 				}
 			})
 			.catch(err => {
-				this.setState({ error: true });
-				this.props.navigation.navigate('ProductList');
+				this.setState({ error: err.message });
 			});
+	};
+
+	closeModal = (): void => {
+		this.setState({ error: '' });
 	};
 
 	render() {
@@ -62,15 +71,14 @@ export default class Login extends Component<Props, State> {
 			<View style={styles.container}>
 				<Image source={require('../images/logo.png')} style={styles.logo} />
 				<Text style={[commonStyles.oswaldRegular, styles.heading]}>Product Store</Text>
-				<Text style={[commonStyles.oswaldRegular, styles.error]}>
-					{this.state.error ? 'Invalid username or password' : ''}
-				</Text>
 				<TextInput
+					value={this.state.email}
 					onChangeText={this.handleLoginChange}
 					placeholder="email"
 					style={[commonStyles.oswaldRegular, styles.input]}
 				/>
 				<TextInput
+					value={this.state.password}
 					onChangeText={this.handlePasswordChange}
 					secureTextEntry={true}
 					placeholder="password"
@@ -107,9 +115,21 @@ const styles = StyleSheet.create({
 		resizeMode: 'contain',
 		marginBottom: 16,
 	},
-	error: {
-		color: '#CB2323',
-		marginBottom: 16,
-		fontSize: 16,
-	},
 });
+
+function mapStateToProps(state: any) {
+	return {
+		error: state.error,
+	};
+}
+
+function mapDispatchToProps(dispatch: any) {
+	return {
+		login: (email: string, password: string) => dispatch(login(email, password)),
+	};
+}
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Login);

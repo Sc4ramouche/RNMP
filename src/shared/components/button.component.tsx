@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-import { commonStyles } from '../shared/const/styles';
+import { commonStyles } from '../../shared';
 
 type Props = {
 	title: string;

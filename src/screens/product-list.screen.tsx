@@ -1,21 +1,30 @@
 import React, { Component } from 'react';
 import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
+import { connect } from 'react-redux';
 
-import { products } from '../shared/const/products';
-import { commonStyles } from '../shared/const/styles';
+import { commonStyles, NUMBER_OF_PRODUCTS } from '../shared';
+import { fetchProducts, fetchAdditionalProducts } from '../actions';
 const arrowIcon = require('../images/arrow.png');
 
-type State = {};
-
-type Props = {
-	onProductPress: (product: any) => void;
-	navigation: NavigationScreenProp<any, any>;
+type State = {
+	items: Array<ProductItem>;
+	offset: number;
+	refreshing: boolean;
 };
 
-export default class ProductList extends Component<Props, State> {
+type Props = {
+	onProductPress: (product: ProductItem) => void;
+	navigation: NavigationScreenProp<any, any>;
+	fetchProducts(): void;
+	fetchAdditionalProducts(offset: number): void;
+	products: Array<ProductItem>;
+	totalItems: number;
+};
+
+class ProductList extends Component<Props, State> {
 	public static navigationOptions = {
-		title: 'Approved Freeware',
+		title: 'Available Items',
 		headerTitleStyle: {
 			fontFamily: 'Oswald-Regular',
 			fontWeight: '200',
@@ -23,13 +32,41 @@ export default class ProductList extends Component<Props, State> {
 		},
 	};
 
+	state: State = {
+		offset: 1,
+		items: [],
+		refreshing: false,
+	};
+
+	componentDidMount = (): void => {
+		this.props.fetchProducts();
+	};
+
+	private refresh = async (): Promise<any> => {
+		this.setState({ refreshing: true });
+		await this.props.fetchProducts();
+		this.setState({ refreshing: false });
+	};
+
+	private endReached = (): void => {
+		if (this.props.products.length < this.props.totalItems) {
+			this.setState({ refreshing: true });
+			this.props.fetchAdditionalProducts(this.state.offset + 1);
+			this.setState({ refreshing: false, offset: this.state.offset + 1 });
+		}
+	};
+
 	render() {
 		return (
 			<View style={styles.container}>
 				<FlatList
-					data={products}
+					data={this.props.products}
 					renderItem={this.renderProduct}
-					keyExtractor={item => item.title}
+					keyExtractor={item => item.id.toString()}
+					refreshing={this.state.refreshing}
+					onRefresh={this.refresh}
+					onEndReachedThreshold={0.5}
+					onEndReached={this.endReached}
 					style={styles.list}
 				/>
 			</View>
@@ -43,10 +80,8 @@ export default class ProductList extends Component<Props, State> {
 				onPress={() => this.props.navigation.navigate('Product', { product: item })}
 			>
 				<View style={styles.productContainer}>
-					<Image source={item.icon} style={styles.listItemIcon} />
-					<Text style={[commonStyles.oswaldRegular, styles.listItemText]}>{item.title}</Text>
-				</View>
-				<View style={styles.arrowContainer}>
+					<Text style={styles.bullet}>{'\u2022'}</Text>
+					<Text style={[commonStyles.oswaldRegular, styles.listItemText]}>{item.name}</Text>
 					<Image source={arrowIcon} style={styles.listItemArrow} />
 				</View>
 			</TouchableOpacity>
@@ -75,7 +110,11 @@ const styles = StyleSheet.create({
 	productContainer: {
 		flexDirection: 'row',
 		alignItems: 'center',
-		width: '40%',
+		justifyContent: 'space-between',
+		width: '100%',
+	},
+	bullet: {
+		fontSize: 40,
 	},
 	listItemIcon: {
 		width: 56,
@@ -84,18 +123,32 @@ const styles = StyleSheet.create({
 	},
 	listItemText: {
 		fontSize: 16,
-		width: 128,
+		width: '80%',
 		paddingLeft: 16,
-	},
-	arrowContainer: {
-		flexDirection: 'row',
-		justifyContent: 'flex-end',
-		width: '60%',
-		paddingRight: 16,
 	},
 	listItemArrow: {
 		width: 36,
 		height: 36,
+		marginRight: 16,
 		resizeMode: 'contain',
 	},
 });
+
+function mapStateToProps(state: any) {
+	return {
+		products: state.products.products,
+		totalItems: state.products.totalItems,
+	};
+}
+
+function mapDispatchToProps(dispatch: any) {
+	return {
+		fetchProducts: () => dispatch(fetchProducts()),
+		fetchAdditionalProducts: (offset: number) => dispatch(fetchAdditionalProducts(offset)),
+	};
+}
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(ProductList);
