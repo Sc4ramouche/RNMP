@@ -1,57 +1,45 @@
 import React, { Component } from 'react';
+import { Provider, connect } from 'react-redux';
 
-import Login from './screens/login.screen';
-import ProductList from './screens/product-list.screen';
-import Product from './screens/product.screen';
+import Router from './router';
+import { store } from './store';
+import { resetError } from './actions';
+import { ErrorModal } from './shared/components/error-modal.component';
 
-const screens = {
-    LOGIN: 'LOGIN',
-    PRODUCT_LIST: 'PRODUCT_LIST',
-    PRODUCT: 'PRODUCT',
+type Props = {
+	error: Error;
 };
 
-type State = {
-    screen: string;
-    product: ProductItem | null;
-};
+class App extends Component<Props> {
+	private closeModal = (): void => {
+		store.dispatch(resetError() as any);
+	};
 
-type Props = {};
+	render() {
+		const { error } = this.props;
+		return (
+			<Provider store={store}>
+				<Router />
+				<ErrorModal visible={!!error} close={this.closeModal} message={error && error.message} />
+			</Provider>
+		);
+	}
+}
 
-export default class App extends Component<Props, State> {
-    state: State = {
-        screen: screens.LOGIN,
-        product: null,
-    };
+function mapStateToProps(state: any) {
+	return {
+		error: state.error,
+	};
+}
 
-    toProducts = (): void => {
-        this.setState({ screen: screens.PRODUCT_LIST });
-    };
+const Application = connect(mapStateToProps)(App);
 
-    onProductPress = (product: ProductItem): void => {
-        this.setState({
-            screen: screens.PRODUCT,
-            product,
-        });
-    };
-
-    render() {
-        switch (this.state.screen) {
-            case screens.LOGIN:
-                return <Login onLogin={this.toProducts} />;
-
-            case screens.PRODUCT_LIST:
-                return <ProductList onProductPress={this.onProductPress} />;
-
-            case screens.PRODUCT:
-                return (
-                    <Product
-                        product={this.state.product}
-                        toProducts={this.toProducts}
-                    />
-                );
-
-            default:
-                return <Login onLogin={this.toProducts} />;
-        }
-    }
+export default class Root extends Component<{}> {
+	render() {
+		return (
+			<Provider store={store}>
+				<Application />
+			</Provider>
+		);
+	}
 }
