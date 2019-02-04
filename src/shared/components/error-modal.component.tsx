@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Modal, Text, View, StyleSheet, Vibration } from 'react-native';
 
 import { commonStyles } from '../../shared';
