@@ -20,7 +20,7 @@ class App extends Component<Props> {
 		return (
 			<Provider store={store}>
 				<Router />
-				<ErrorModal visible={!!error} close={this.closeModal} message={error && error.message} />
+				{!!error && <ErrorModal visible={!!error} close={this.closeModal} message={error && error.message} />}
 			</Provider>
 		);
 	}
