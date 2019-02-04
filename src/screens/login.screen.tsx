@@ -87,7 +87,6 @@ class Login extends Component<Props, State> {
 	};
 
 	render() {
-		
 		return (
 			<Animated.View style={styles.container}>
 				<Image source={require('../images/logo.png')} style={styles.logo} />
@@ -109,11 +108,7 @@ class Login extends Component<Props, State> {
 					<Image source={require('../images/check.png')} style={styles.check} />
 					<Image source={require('../images/cross.png')} style={styles.cross} />
 					<View style={this.calcMargin()}>
-						<Button
-							title="LOGIN"
-							onPress={this.handleLoginClick}
-							success={this.state.success}
-						/>
+						<Button title="LOGIN" onPress={this.handleLoginClick} success={this.state.success} />
 					</View>
 				</View>
 			</Animated.View>
