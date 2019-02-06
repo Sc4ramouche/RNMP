@@ -16,7 +16,6 @@ export const commonStyles = StyleSheet.create({
 	},
 	modalContent: {
 		width: '70%',
-		height: '20%',
 		backgroundColor: 'white',
 		justifyContent: 'space-between',
 		padding: 16,

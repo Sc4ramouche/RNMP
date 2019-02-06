@@ -21,10 +21,6 @@ export class NetworkModal extends Component<Props> {
 						<Text style={[styles.message, commonStyles.oswaldRegular]}>
 							Seems like you have no active active connections. Please, enable Wi-Fi or cellular data via settings.
 						</Text>
-						<View style={styles.buttons}>
-							<Text>Enable</Text>
-							<Text>Close</Text>
-						</View>
 					</View>
 				</View>
 			</Modal>
