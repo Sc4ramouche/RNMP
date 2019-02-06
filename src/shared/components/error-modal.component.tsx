@@ -18,7 +18,7 @@ export const ErrorModal = (props: Props) => {
 			transparent={true}
 			onRequestClose={() => 's'}
 		>
-			<View style={styles.container}>
+			<View style={commonStyles.modalContainer}>
 				<View style={styles.content}>
 					<Text style={[styles.message, commonStyles.oswaldRegular]}>{props.message}</Text>
 					<View style={styles.buttons}>
@@ -33,12 +33,6 @@ export const ErrorModal = (props: Props) => {
 };
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#00000040',
-	},
 	content: {
 		width: '70%',
 		height: '18%',
