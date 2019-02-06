@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Modal, Text, View, StyleSheet } from 'react-native';
+import React from 'react';
+import { Modal, Text, View, StyleSheet, Vibration } from 'react-native';
 
 import { commonStyles } from '../../shared';
 
@@ -9,28 +9,30 @@ type Props = {
 	close(): void;
 };
 
-export const ErrorModal = (props: Props) => (
-	<Modal visible={props.visible} animationType="fade" transparent={true} onRequestClose={() => 's'}>
-		<View style={styles.container}>
-			<View style={styles.content}>
-				<Text style={[styles.message, commonStyles.oswaldRegular]}>{props.message}</Text>
-				<View style={styles.buttons}>
-					<Text style={[styles.btn, commonStyles.oswaldBold]} onPress={props.close}>
-						Close
-					</Text>
+export const ErrorModal = (props: Props) => {
+	Vibration.vibrate(200, false);
+	return (
+		<Modal
+			visible={props.visible}
+			animationType="fade"
+			transparent={true}
+			onRequestClose={() => 's'}
+		>
+			<View style={commonStyles.modalContainer}>
+				<View style={styles.content}>
+					<Text style={[styles.message, commonStyles.oswaldRegular]}>{props.message}</Text>
+					<View style={styles.buttons}>
+						<Text style={[styles.btn, commonStyles.oswaldBold]} onPress={props.close}>
+							Close
+						</Text>
+					</View>
 				</View>
 			</View>
-		</View>
-	</Modal>
-);
+		</Modal>
+	);
+};
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#00000040',
-	},
 	content: {
 		width: '70%',
 		height: '18%',

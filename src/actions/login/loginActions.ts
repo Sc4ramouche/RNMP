@@ -1,5 +1,5 @@
 import { loginAT } from './loginActionTypes';
-import { LayoutAnimation } from 'react-native';
+import { AsyncStorage } from 'react-native';
 
 const { LOGIN_SUCCESS, LOGIN_REQUEST, LOGIN_FAILURE } = loginAT;
 
@@ -49,6 +49,7 @@ export const login = (
 				dispatch(loginSuccess());
 				animationCallback(1);
 				setTimeout(() => successCallback(), delay);
+				storeLogin(email);
 			} else {
 				animationCallback(-1);
 				setTimeout(() => dispatch(loginFailure(new Error(data.message))), delay);
@@ -58,3 +59,21 @@ export const login = (
 			dispatch(loginFailure(err));
 		});
 };
+
+export async function storeLogin(email: string): Promise<void> {
+	try {
+		await AsyncStorage.setItem('email', email);
+	} catch (error) {
+		loginFailure(error);
+	}
+}
+
+export async function retrieveLogin(): Promise<boolean> {
+	try {
+		const email = await AsyncStorage.getItem('email');
+		return email ? true : false;
+	} catch (error) {
+		loginFailure(error);
+	}
+	return false;
+}
