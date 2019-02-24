@@ -21,4 +21,15 @@ export const commonStyles = StyleSheet.create({
 		padding: 16,
 		borderRadius: 5,
 	},
+	button: {
+		alignItems: 'center',
+		backgroundColor: '#CEDB56',
+		marginBottom: 20,
+	},
+	buttonText: {
+		paddingVertical: 10,
+		paddingHorizontal: 20,
+		fontSize: 18,
+		color: 'white',
+	},
 });
