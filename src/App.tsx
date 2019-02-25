@@ -1,11 +1,23 @@
 import React, { Component } from 'react';
+import { Platform, PushNotificationIOS, NetInfo } from 'react-native';
 import { Provider, connect } from 'react-redux';
+import PushNotification from 'react-native-push-notification';
 
 import Router from './router';
 import { store } from './store';
 import { resetError } from './actions';
-import { ErrorModal, NetworkModal } from './shared';
-import { NetInfo, Alert } from 'react-native';
+import { ErrorModal, navigationService } from './shared';
+import { NavigationContainerComponent } from 'react-navigation';
+
+PushNotification.configure({
+	onNotification: function(notification) {
+		navigationService.navigate('Cart');
+
+		if (Platform.OS === 'ios') {
+			notification.finish(PushNotificationIOS.FetchResult.NoData);
+		}
+	},
+});
 
 type Props = {
 	error: Error;
@@ -48,11 +60,12 @@ class App extends Component<Props, State> {
 		const { error } = this.props;
 		return (
 			<Provider store={store}>
-				<Router />
-				{!!error && (
-					<ErrorModal visible={!!error} close={this.closeModal} message={error && error.message} />
-				)}
-				{!this.state.connected && <NetworkModal visible={!this.state.connected} />}
+				<Router
+					ref={(navigatorRef: NavigationContainerComponent) => {
+						navigationService.setTopLevelNavigator(navigatorRef);
+					}}
+				/>
+				<ErrorModal visible={!!error} close={this.closeModal} message={error && error.message} />
 			</Provider>
 		);
 	}

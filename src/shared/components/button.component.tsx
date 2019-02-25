@@ -6,7 +6,7 @@ import { commonStyles } from '../../shared';
 type Props = {
 	title: string;
 	onPress: () => void;
-	success: number;
+	success?: number;
 };
 
 type State = {
@@ -20,7 +20,10 @@ export class Button extends React.Component<Props, State> {
 
 	public componentDidUpdate(prevProps: Props, prevState: State) {
 		if (prevProps.success !== this.props.success) {
-			Animated.timing(this.state.color, { toValue: this.props.success, duration: 300 }).start();
+			Animated.timing(this.state.color, {
+				toValue: this.props.success ? this.props.success : 0,
+				duration: 300,
+			}).start();
 		}
 	}
 
@@ -34,11 +37,11 @@ export class Button extends React.Component<Props, State> {
 				<Animated.View
 					style={
 						this.props.success
-							? [styles.button, { backgroundColor: color }]
-							: styles.button
+							? [commonStyles.button, { backgroundColor: color }]
+							: commonStyles.button
 					}
 				>
-					<Text style={[commonStyles.oswaldBold, styles.buttonText]}>{this.props.title}</Text>
+					<Text style={[commonStyles.oswaldBold, commonStyles.buttonText]}>{this.props.title}</Text>
 				</Animated.View>
 			</TouchableWithoutFeedback>
 		);
@@ -48,16 +51,5 @@ export class Button extends React.Component<Props, State> {
 const styles = StyleSheet.create({
 	container: {
 		alignItems: 'center',
-	},
-	button: {
-		alignItems: 'center',
-		backgroundColor: '#CEDB56',
-		marginBottom: 20,
-	},
-	buttonText: {
-		paddingVertical: 10,
-		paddingHorizontal: 20,
-		fontSize: 18,
-		color: 'white',
 	},
 });

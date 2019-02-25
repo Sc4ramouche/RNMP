@@ -39,6 +39,7 @@ export function productsReducer(state: any = initialState, action: Action) {
 		case FETCH_ADDITIONAL_PRODUCTS_FAILURE: {
 			return state;
 		}
+
 		default:
 			return state;
 	}

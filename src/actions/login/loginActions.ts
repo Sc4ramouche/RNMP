@@ -10,8 +10,9 @@ function loginRequest(): Action {
 	};
 }
 
-function loginSuccess(): Action {
+function loginSuccess(token: string): Action {
 	return {
+		token,
 		type: LOGIN_SUCCESS,
 		isLoading: false,
 	};
@@ -46,7 +47,7 @@ export const login = (
 		.then(res => res.json())
 		.then(data => {
 			if (!data.message) {
-				dispatch(loginSuccess());
+				dispatch(loginSuccess(data));
 				animationCallback(1);
 				setTimeout(() => successCallback(), delay);
 				storeLogin(email);

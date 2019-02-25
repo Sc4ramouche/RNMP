@@ -185,4 +185,4 @@ function mapDispatchToProps(dispatch: any) {
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(Login);
+)(Login as any);
