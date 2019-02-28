@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const ErrorModal = (props: Props) => {
-	Vibration.vibrate(200, false);
+	props.visible && Vibration.vibrate(200, false);
 	return (
 		<Modal
 			visible={props.visible}
