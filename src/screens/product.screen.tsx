@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
+import { connect } from 'react-redux';
 
 import { Button, commonStyles } from '../shared';
+import { addProductToCart } from '../actions';
 
 type NavigationParams = {
 	product: ProductItem;
@@ -11,10 +13,11 @@ type NavigationParams = {
 type Props = {
 	product: ProductItem;
 	toProducts: () => void;
+	addProductToCart(sku: string): void;
 	navigation: NavigationScreenProp<{}, NavigationParams>;
 };
 
-export default class Product extends Component<Props> {
+class Product extends Component<Props> {
 	public static navigationOptions = {
 		title: 'Product',
 		headerTitleStyle: {
@@ -28,7 +31,7 @@ export default class Product extends Component<Props> {
 		const { navigation } = this.props;
 		const product = navigation.getParam('product');
 		return (
-			<View style={styles.container}>
+			<ScrollView style={styles.container}>
 				<View style={styles.headingContainer}>
 					<TouchableOpacity onPress={() => navigation.navigate('Map', { product })}>
 						<Image source={require('../images/map.png')} style={styles.icon} />
@@ -40,13 +43,15 @@ export default class Product extends Component<Props> {
 						{'\t' +
 							'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}
 					</Text>
-					<Button
-						title="All Products"
-						onPress={() => navigation.navigate('ProductList')}
-						style={styles.descriptionButton}
-					/>
+					<TouchableOpacity
+						style={commonStyles.button}
+						onPress={() => this.props.addProductToCart(product.sku)}
+					>
+						<Text style={[commonStyles.buttonText, commonStyles.oswaldBold]}>Add To Cart</Text>
+					</TouchableOpacity>
+					<Button title="All Products" onPress={() => navigation.navigate('ProductList')} />
 				</View>
-			</View>
+			</ScrollView>
 		);
 	}
 }
@@ -87,3 +92,14 @@ const styles = StyleSheet.create({
 		alignSelf: 'flex-start',
 	},
 });
+
+function mapDispatchToProps(dispatch: any) {
+	return {
+		addProductToCart: (sku: string) => dispatch(addProductToCart(sku)),
+	};
+}
+
+export default connect(
+	null,
+	mapDispatchToProps
+)(Product);

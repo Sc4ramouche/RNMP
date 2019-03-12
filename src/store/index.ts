@@ -6,9 +6,10 @@ import {
 	loginReducer as login,
 	loadingReducer as isLoading,
 	errorReducer as error,
+	cartReducer as cart,
 } from '../reducers';
 
-const rootReducer = combineReducers({ products, login, isLoading, error });
+const rootReducer = combineReducers({ products, login, isLoading, error, cart });
 
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
