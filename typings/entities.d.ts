@@ -18,3 +18,9 @@ declare type StackNavigatorOptions = {
 	headerRight?: JSX.Element;
 	headerTitleStyle: any;
 };
+
+declare type Credentials = {
+	username: string;
+	password: string;
+	service?: string;
+};

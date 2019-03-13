@@ -3,6 +3,7 @@ package com.setup_project;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.oblador.keychain.KeychainPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.airbnb.android.react.maps.MapsPackage;
@@ -27,6 +28,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new KeychainPackage(),
             new ReactNativePushNotificationPackage(),
             new SplashScreenReactPackage(),
             new MapsPackage(),
