@@ -13,7 +13,7 @@ import {
 
 import { Button, commonStyles } from '../shared';
 import { connect } from 'react-redux';
-import { login, retrieveLogin } from '../actions';
+import { login, retrieveCredentials } from '../actions';
 
 if (Platform.OS === 'android') {
 	UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -43,12 +43,16 @@ class Login extends Component<Props, State> {
 		success: 0,
 	};
 
-	componentDidMount():void {
-		retrieveLogin().then(isLogged => {
-			if (isLogged) {
-				this.props.navigation.navigate('ProductList');
+	componentDidMount(): void {
+		retrieveCredentials().then((credentials: Credentials | boolean) => {
+			if (credentials) {
+				const { username, password } = credentials as Credentials;
+				this.setState({
+					email: username,
+					password,
+				});
 			}
-		})
+		});
 	}
 
 	public componentDidUpdate(prevProps: Props, prevState: State) {

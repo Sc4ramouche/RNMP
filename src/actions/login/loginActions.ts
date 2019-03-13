@@ -1,5 +1,5 @@
 import { loginAT } from './loginActionTypes';
-import { AsyncStorage } from 'react-native';
+import * as Keychain from 'react-native-keychain';
 
 const { LOGIN_SUCCESS, LOGIN_REQUEST, LOGIN_FAILURE } = loginAT;
 
@@ -50,7 +50,7 @@ export const login = (
 				dispatch(loginSuccess(data));
 				animationCallback(1);
 				setTimeout(() => successCallback(), delay);
-				storeLogin(email);
+				storeCredentials(email, password);
 			} else {
 				animationCallback(-1);
 				setTimeout(() => dispatch(loginFailure(new Error(data.message))), delay);
@@ -61,20 +61,15 @@ export const login = (
 		});
 };
 
-export async function storeLogin(email: string): Promise<void> {
-	try {
-		await AsyncStorage.setItem('email', email);
-	} catch (error) {
-		loginFailure(error);
-	}
+export async function storeCredentials(email: string, password: string): Promise<void> {
+	await Keychain.setGenericPassword(email, password);
 }
 
-export async function retrieveLogin(): Promise<boolean> {
+export async function retrieveCredentials(): Promise<Credentials | boolean> {
 	try {
-		const email = await AsyncStorage.getItem('email');
-		return email ? true : false;
+		return Keychain.getGenericPassword();
 	} catch (error) {
 		loginFailure(error);
+		return false;
 	}
-	return false;
 }
